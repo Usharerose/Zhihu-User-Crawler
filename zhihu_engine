@@ -1,9 +1,10 @@
-import zhihu_crawler
+import zhihu_crawler, zhihu_bloomfilter
 import time, queue, os
 from multiprocessing.dummy import Pool
 
 q = queue.Queue()
 crawler = zhihu_crawler.Zhihu_Crawler()
+bf = zhihu_bloomfilter.BloomFilter()
 
 def starter(inputurl):
     url_list = crawler.parse_user_profile(url=inputurl)
@@ -16,8 +17,11 @@ def worker():
         url = q.get()
         url_list = crawler.parse_user_profile(url=url)
         for x in url_list:
-            q.put(x)
-        print('ok')
+            if not bf.contain(x):
+                q.put(x)
+                bf.add(x)
+            else:
+                print('%s has existed, which will be ignored.' %x)
 
 if __name__ == "__main__":
 
