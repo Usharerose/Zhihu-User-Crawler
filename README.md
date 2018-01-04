@@ -10,4 +10,5 @@ mmh3 and bitarray
 1) Using Zhihu account to sign in, saving the cookies.<br>
 2) Using Xpath and re to parse the html, getting one user's basic information.<br>
 3) Using threading(multiprocessing.dummy) to crawl one user's following list.<br>
-4) Using Queue to save the urls, crawling the urls concurrently.
+4) Using Queue to save the urls, crawling the urls concurrently.<br>
+5) Using BloomFilter for testing urls' membership in a set.
