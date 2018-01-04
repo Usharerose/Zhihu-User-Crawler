@@ -1,9 +1,13 @@
 # Zhihu-User-Crawler
 Crawling Zhihu users' Info based on users' following list
 ## Requirements
-requests, mongoengine(MongoDB), lxml, queue, multiprocessing.dummy, lock
+requests and http.cookiejar,<br>
+lxml and json,<br>
+mongoengine(MongoDB),<br>
+PIL,<br>
+mmh3 and bitarray
 ## Process
 1) Using Zhihu account to sign in, saving the cookies.<br>
-2) Using Xpath to parse the html, getting one user's basic information.<br>
+2) Using Xpath and re to parse the html, getting one user's basic information.<br>
 3) Using threading(multiprocessing.dummy) to crawl one user's following list.<br>
 4) Using Queue to save the urls, crawling the urls concurrently.
