@@ -1,6 +1,7 @@
-import requests, json, re, time, os
+import requests, json, re, time, os, random
 from lxml import html
 import zhihu_cookie, zhihu_db
+from zhihu_proxy import proxy_list
 from multiprocessing.dummy import Pool
 from threading import Lock
 
@@ -14,7 +15,7 @@ class Zhihu_Crawler(object):
         self.cookie_get.login_execute()
         #用户“关注的人”的url
         added_following_url = url + '/followees'
-        r = self.cookie_get.s.get(added_following_url, headers=self.cookie_get.headers, verify=False)
+        r = self.cookie_get.s.get(added_following_url, headers=self.cookie_get.headers, verify=False, proxies={'http':'http://'+random.choice(proxy_list)})
         self.cookies = self.cookie_get.s.cookies
         self.headers = self.cookie_get.headers
         return r.content
@@ -53,7 +54,10 @@ class Zhihu_Crawler(object):
             #'_xsrf': xsrf_value
         }
         headers['X-Xsrftoken'] = xsrf_value
-        r = self.cookie_get.s.post(request_url, headers=headers, data=form_data)
+        r = self.cookie_get.s.post(request_url, headers=headers, data=form_data, proxies={'http':'http://'+random.choice(proxy_list)})
+        while r.status_code != 200:
+            time.sleep(4)
+            r = self.cookie_get.s.post(request_url, headers=headers, data=form_data, proxies={'http':'http://'+random.choice(proxy_list)})
         print(r.status_code)
         json_data = json.loads(r.content)
         followees_url = []
