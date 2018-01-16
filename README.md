@@ -12,3 +12,4 @@ mmh3 and bitarray
 3) Using threading(multiprocessing.dummy) to crawl one user's following list.<br>
 4) Using Queue to save the urls, crawling the urls concurrently.<br>
 5) Using BloomFilter for testing urls' membership in a set.
+6) Adding proxy crawler, getting proxy url for requesting.
