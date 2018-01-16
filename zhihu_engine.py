@@ -24,11 +24,10 @@ def worker():
                 print('%s has existed, which will be ignored.' %x)
 
 if __name__ == "__main__":
-
     initial_url = '请在这里输入您的爬取种子网页，如https://www.zhihu.com/people/XXXX'
+    bf.add(initial_url)
     starter(initial_url)
     pool = Pool(os.cpu_count())
-    for p in range(os.cpu_count()):
-        task = pool.apply_async(func=worker)
+    task = pool.apply_async(func=worker)
     pool.close()
     pool.join()
