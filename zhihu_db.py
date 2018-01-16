@@ -16,3 +16,12 @@ class Zhihu_User_Profile(mongoengine.Document):
     user_be_thanked_num = mongoengine.StringField()
     user_info = mongoengine.StringField()
     user_introduction = mongoengine.StringField()
+
+class BaseModel(mongoengine.Document):
+    create_at = mongoengine.DateTimeField()
+    meta = {'allow_inheritance': True,
+            'abstract': True}
+
+class Proxy(BaseModel):
+    address = mongoengine.StringField(unique=True)
+    meta = {'collection': 'proxy'}
